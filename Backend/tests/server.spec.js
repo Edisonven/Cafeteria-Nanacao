@@ -19,4 +19,15 @@ describe("Operaciones CRUD de cafes", () => {
       .send();
     expect(statusCode).toBe(404);
   });
+  it("Testeando ruta /cafes con statusCode 201 para agregar un nuevo café", async () => {
+    const cafe = {
+      id: Math.floor(Math.random() * 9999),
+      nombre: "Nuevo café",
+    };
+    const { statusCode, body: cafes } = await request(server)
+      .post("/cafes")
+      .send(cafe);
+    expect(cafes).toContainEqual(cafe);
+    expect(statusCode).toBe(201);
+  });
 });

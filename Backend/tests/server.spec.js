@@ -13,7 +13,7 @@ describe("Operaciones CRUD de cafes", () => {
   it("Obteniendo statusCode 404 al eliminar elemento con id erróneo", async () => {
     const id = 5468465;
     const token = "token";
-    const { statusCode, body: cafes } = await request(server)
+    const { statusCode } = await request(server)
       .delete(`/cafes/${id}`)
       .set("Authorization", token)
       .send();
@@ -29,5 +29,14 @@ describe("Operaciones CRUD de cafes", () => {
       .send(cafe);
     expect(cafes).toContainEqual(cafe);
     expect(statusCode).toBe(201);
+  });
+  it("Testeando ruta /cafes/id para modificar elemento con id erróneo", async () => {
+    const id = 54564;
+    const cafe = {
+      id: 4454,
+      nombre: "nuevo cafe",
+    };
+    const { statusCode } = await request(server).put(`/cafes/${id}`).send(cafe);
+    expect(statusCode).toBe(400);
   });
 });
